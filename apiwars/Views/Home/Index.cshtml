@@ -1,0 +1,30 @@
+﻿@page
+@* @model IndexModel *@
+@{
+    // ViewData["Title"] = "Home page";
+}
+
+<div class="container">
+    <h1>Star Wars universe planets</h1>
+    <button type="button" class="btn btn-primary swap-page" id="previous"
+            data-page="previous" data-previous-page="null">Previous</button>
+    <button type="button" class="btn btn-primary swap-page" id="next"
+            data-page="next" data-next-page="null">Next</button>
+
+    <table class="table table-bordered table-responsive planets-table">
+        <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Diameter</th>
+            <th scope="col">Climate</th>
+            <th scope="col">Terrain</th>
+            <th scope="col">Surface Water Percentage</th>
+            <th scope="col">Population</th>
+            <th scope="col">Residents</th>
+            <th scope="col" style="width: 100px;"></th>
+        </tr>
+        </thead>
+        <tbody class="planet-table-body"></tbody>
+    </table>
+
+</div>

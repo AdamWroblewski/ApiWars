@@ -1,0 +1,38 @@
+﻿﻿.swap-page {
+    margin: 10px 10px 10px 0;
+}
+
+.form-group > label{
+    width: 100px;
+}
+
+.alert-danger, .alert-success{
+    margin-bottom: 0;
+}
+
+tr td button{
+    width: 90px;
+    height: 50px;
+}
+
+.modal-content {
+    display: inline-block;
+    width: fit-content;
+    height: fit-content;
+
+}
+
+span{
+    white-space: nowrap;
+}
+
+tr > .residenta-name, .people-output{
+    white-space: nowrap;
+}
+
+.votebutton{
+    width: 110px;
+    height: 50px;
+    margin: 0 auto;
+    vertical-align: middle;
+}
