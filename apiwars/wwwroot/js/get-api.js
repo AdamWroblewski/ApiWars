@@ -1,10 +1,19 @@
 import {
-    getModalDomElements, getNavigationButtons, getVoteButtons, getPlanetsTableBody,
-    getResidentStatisticsButton, getResidentTableHeaders, getResidentTableBody, getVoteStaticticsNavItem
+    getModalDomElements,
+    getNavigationButtons,
+    getPlanetsTableBody,
+    getResidentStatisticsButton,
+    getResidentTableBody,
+    getResidentTableHeaders,
+    getVoteButtons,
+    getVoteStaticticsNavItem
 } from "./get-dom-elements.js";
 import {
-    insertRowData, createPlanetsTable, createVotingStatisticsTable, changeButtonAfterSuccessfulVote,
-    changeButtonAfterFailedVote
+    changeButtonAfterFailedVote,
+    changeButtonAfterSuccessfulVote,
+    createPlanetsTable,
+    createVotingStatisticsTable,
+    insertRowData
 } from "./dom-manipulation.js";
 import {setButtonUrl} from "./change-pages.js";
 
@@ -43,7 +52,7 @@ let ajaxVote = function (button) {
 
     let url = '/vote?' + $.param(voteUrlParams);
 
-    fetch(url, {method: 'POST', mode: 'cors'})
+    fetch(url, {method: 'POST'})
         .then(response => response.json())
         .then(data => {
             if (data['vote'] == 'Successful')
@@ -56,14 +65,13 @@ let ajaxVote = function (button) {
 let downloadPlanetApiData = function (planetPage) {
     sessionStorage.removeItem(planetPage);
 
-    fetch(planetPage, {mode: 'cors'})
+    fetch(planetPage)
         .then(response => response.json())
         .then(data => sessionStorage.setItem(planetPage, JSON.stringify(data)))
         .catch(err => console.log(err));
 };
 
 let fetchPlanetData = function (planetPage, buttons) {
-    const proxyurl = "https://cors-anywhere.herokuapp.com/";
     fetch(proxyurl + planetPage)
         .then((response) => response.json())
         .then(data => {
@@ -153,7 +161,7 @@ let loadResidentApi = function (button) {
     modalForm.modalConfirm.style.visibility = "hidden";
     modalForm.modalTitle.innerHTML = 'Residents of ' + planetName;
 
-    fetch(`https://swapi.dev/api/planets/?search=${planetName}`, {mode: 'cors'})
+    fetch(`https://swapi.dev/api/planets/?search=${planetName}`)
         .then((response) => response.json())
         .then((data) => createResidentTable(data, planetName))
 };
@@ -173,7 +181,7 @@ let fetchResidentsData = function (planetName, residentsUrl) {
         }
     } else {
         for (let resident of residentsUrl) {
-            fetch(resident, {mode: 'cors'})
+            fetch(resident)
                 .then((response) => response.json())
                 .then(data => {
                     residentsArray.push(data);
