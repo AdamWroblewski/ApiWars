@@ -50,14 +50,15 @@ let ajaxVote = function (button) {
         mode: 'cors',
         headers: {
             'Content-Type': 'application/json',
-        }})
+        }
+    })
         .then(response => {
             if (response.status === 200)
                 changeButtonAfterSuccessfulVote(response, button);
             else
                 changeButtonAfterFailedVote(response, button)
         })
-    };
+};
 
 let downloadPlanetApiData = function (planetPage) {
     sessionStorage.removeItem(planetPage);

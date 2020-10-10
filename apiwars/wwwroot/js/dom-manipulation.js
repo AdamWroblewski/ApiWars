@@ -44,8 +44,8 @@ let insertVotingStatictisToTable = function (voteStatictics) {
     return tableRow
 };
 
-export let createPlanetsTable = function(output){
-    let button = createVoteButton(output);
+export let createPlanetsTable = function (output, statusCode) {
+    let button = createVoteButton(output, statusCode);
     return `<tr data-planet-name="${output.name}">
         <td scope="row">${output.name}</td>  
         <td scope="row">${output.diameter}</td>
@@ -58,35 +58,32 @@ export let createPlanetsTable = function(output){
     </tr>`
 };
 
-let writePercentageSign = function(surfaceWaterPercentage){
-    if (surfaceWaterPercentage != 'unknown'){
-        return surfaceWaterPercentage+"%";
+let writePercentageSign = function (surfaceWaterPercentage) {
+    if (surfaceWaterPercentage != 'unknown') {
+        return surfaceWaterPercentage + "%";
     } else {
         return 'unknown'
     }
 };
 
 let writePopulation = function (population) {
-    if (population != 'unknown'){
-        return population.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+' people'
-    } else{
+    if (population != 'unknown') {
+        return population.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' people'
+    } else {
         return 'unknown'
     }
 };
 
-let getPlanetId = function(planetData){
+let getPlanetId = function (planetData) {
     let planetId = planetData.url.split('/');
     planetId = planetId.pop() || planetId.pop();
     return planetId
 };
 
-let createVoteButton = function(output){
+let createVoteButton = function (output, isLogged) {
     let planetId = getPlanetId(output);
 
-    let ifUserLogged = getUserSystemButtons();
-
-    if (ifUserLogged.loginButton == null){
-
+    if (true) {
         return `<button type="button" name="vote-button" class="votebutton btn btn-light btn-outline-secondary" 
                 data-planet-id="${planetId}" data-planet-name="${output.name}">Vote</button>`
     } else {
@@ -95,19 +92,19 @@ let createVoteButton = function(output){
     }
 };
 
-let showResidentButton = function(planets){
+let showResidentButton = function (planets) {
     let residentsCount = planets.residents.length;
-    if (residentsCount == 0){
+    if (residentsCount == 0) {
         return 'No known residents'
     } else {
-       return `<button type="button" class="btn btn-light btn-outline-dark btn-block resident-button" data-toggle="modal"
+        return `<button type="button" class="btn btn-light btn-outline-dark btn-block resident-button" data-toggle="modal"
             data-target="#apiwars-modal" data-residents="${planets.name}"><span>${residentsCount} resident(s)</span></button>`
     }
 };
 
-export let resetPlanetsTable = function(){
+export let resetPlanetsTable = function () {
     let planetsTable = getPlanetsTable();
-        planetsTable.innerHTML = `<thead>
+    planetsTable.innerHTML = `<thead>
             <tr>
               <th scope="col">Name</th>
               <th scope="col">Diameter</th>
