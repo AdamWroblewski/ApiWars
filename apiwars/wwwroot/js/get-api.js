@@ -40,18 +40,24 @@ let ajaxVote = function (button) {
         planetName: button.dataset.planetName,
         planetNameList: JSON.stringify(planetNamesArray,)
     };
+    console.log(voteUrlParams.planetId);
+    console.log(voteUrlParams.planetName);
 
-    let url = '/vote?' + $.param(voteUrlParams);
+    let url = '/Home/VoteToPlanet?' + 'planetId=' + voteUrlParams.planetId + '&planetName=' + voteUrlParams.planetName;
 
-    fetch(url, {method: 'POST', mode: 'cors'})
-        .then(response => response.json())
-        .then(data => {
-            if (data['vote'] == 'Successful')
-                changeButtonAfterSuccessfulVote(data, button);
+    fetch(url, {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+            'Content-Type': 'application/json',
+        }})
+        .then(response => {
+            if (response.status === 200)
+                changeButtonAfterSuccessfulVote(response, button);
             else
-                changeButtonAfterFailedVote(data, button)
+                changeButtonAfterFailedVote(response, button)
         })
-};
+    };
 
 let downloadPlanetApiData = function (planetPage) {
     sessionStorage.removeItem(planetPage);

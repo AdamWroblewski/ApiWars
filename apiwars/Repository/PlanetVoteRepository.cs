@@ -25,5 +25,10 @@ namespace apiwars.Repository
         {
             return await _context.PlanetVotes.ToListAsync();
         }
+
+        public async Task<int> SaveChangesAsync()
+        {
+            return await _context.SaveChangesAsync();
+        }
     }
 }

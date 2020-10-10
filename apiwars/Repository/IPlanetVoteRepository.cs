@@ -8,5 +8,6 @@ namespace apiwars.Repository
     {
         public Task<PlanetVotesModel> AddAsync(PlanetVotesModel model);
         public Task<IEnumerable<PlanetVotesModel>> GetAllAsync();
+        public Task<int> SaveChangesAsync();
     }
 }

@@ -123,7 +123,7 @@ export let resetPlanetsTable = function(){
 };
 
 export let changeButtonAfterSuccessfulVote = function (data, button) {
-    button.innerHTML = data.vote;
+    button.innerHTML = "Voted";
     button.classList.remove('btn-light');
     button.style.color = 'white';
     button.style.backgroundColor = 'green';
@@ -131,7 +131,7 @@ export let changeButtonAfterSuccessfulVote = function (data, button) {
 };
 
 export let changeButtonAfterFailedVote = function (data, button) {
-    button.innerHTML = data.vote;
+    button.innerHTML = "Error";
     button.classList.remove('btn-light');
     button.style.color = 'white';
     button.style.backgroundColor = '#db5621';
