@@ -1,5 +1,6 @@
 using System.Reflection;
 using apiwars.Context;
+using apiwars.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -34,6 +35,7 @@ namespace apiwars
                 .AddDefaultTokenProviders();
 
             services.AddControllersWithViews();
+            services.AddTransient<IPlanetVoteRepository, PlanetVoteRepository>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
