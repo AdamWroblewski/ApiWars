@@ -45,9 +45,7 @@ let insertVotingStatictisToTable = function (voteStatictics) {
             votesCount[vote.planetName] = parseInt(votesCount[vote.planetName] + 1);
         }
     })
-    console.log(votesCount)
     for (let vote in votesCount){
-        console.log(vote)
         tableRow += `<tr>
                       <td>${vote}</td>
                       <td>${votesCount[vote]}</td>
