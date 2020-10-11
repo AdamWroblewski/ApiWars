@@ -29,8 +29,8 @@ export let createVotingStatisticsTable = function (voteStatictics) {
           </tbody>
         </table>
     `;
-    modal.modalTitle.innerHTML = 'Voting statistics';
-    modal.modalConfirm.style.visibility = 'hidden';
+    // modal.modalTitle.innerHTML = 'Voting statistics';
+    // modal.modalConfirm.style.visibility = 'hidden';
 };
 
 let insertVotingStatictisToTable = function (voteStatictics) {
