@@ -35,12 +35,24 @@ export let createVotingStatisticsTable = function (voteStatictics) {
 
 let insertVotingStatictisToTable = function (voteStatictics) {
     let tableRow = '';
-    voteStatictics.forEach(function (row) {
+    let votes = Object.entries(voteStatictics)[0][1];
+    let votesCount = Object.create({});
+    votes.forEach(vote => {
+        if (!(vote.planetName in votesCount)){
+            votesCount[vote.planetName+""] = 1;
+        }
+        else {
+            votesCount[vote.planetName] = parseInt(votesCount[vote.planetName] + 1);
+        }
+    })
+    console.log(votesCount)
+    for (let vote in votesCount){
+        console.log(vote)
         tableRow += `<tr>
-                      <td>${encodeURIComponent(row.planet_name)}</td>
-                      <td>${row.count}</td>
+                      <td>${vote}</td>
+                      <td>${votesCount[vote]}</td>
                     </tr>`
-    });
+    }
     return tableRow
 };
 

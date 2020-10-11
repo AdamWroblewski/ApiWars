@@ -23,7 +23,7 @@ let addVoteEvent = function () {
 };
 
 let ajaxDisplayVote = function () {
-    fetch('/vote')
+    fetch("/Home/GetPlanetStatisticVotes")
         .then(response => response.json())
         .then(data => createVotingStatisticsTable(data))
         .catch(err => console.log(err))

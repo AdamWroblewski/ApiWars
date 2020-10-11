@@ -41,9 +41,10 @@
             </li>
             <li class="nav-item">
                 <span class="nav-link voting-statistics-navitem"
-                      data-toggle="modal" data-target="#apiwars-modal">
+                      data-toggle="modal" data-target="#voting-statistics-modal">
                     Voting statistics
                 </span>
+                @await Html.PartialAsync("PlanetVotesModal")
             </li>
         </ul>
 
