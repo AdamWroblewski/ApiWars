@@ -52,11 +52,11 @@ namespace apiwars
                 app.UseHsts();
             }
 
-            // using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
-            // {
-            //     var context = serviceScope.ServiceProvider.GetService<ApiwarsContext>();
-            //     context.Database.Migrate();
-            // }
+            using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+            {
+                var context = serviceScope.ServiceProvider.GetService<ApiwarsContext>();
+                context.Database.Migrate();
+            }
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
