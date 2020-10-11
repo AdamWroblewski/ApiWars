@@ -7,9 +7,13 @@
 <div class="container">
     <h1>Star Wars universe planets</h1>
     <button type="button" class="btn btn-primary swap-page" id="previous"
-            data-page="previous" data-previous-page="null">Previous</button>
+            data-page="previous" data-previous-page="null">
+        Previous
+    </button>
     <button type="button" class="btn btn-primary swap-page" id="next"
-            data-page="next" data-next-page="null">Next</button>
+            data-page="next" data-next-page="null">
+        Next
+    </button>
 
     <table class="table table-bordered table-responsive planets-table">
         <thead>
@@ -24,7 +28,13 @@
             <th scope="col" style="width: 100px;"></th>
         </tr>
         </thead>
-        <tbody class="planet-table-body"></tbody>
+        <tbody class="planet-table-body">
+        <tr>
+            <td colspan="8">
+                <div class="loader"></div>
+            </td>
+        </tr>
+        </tbody>
     </table>
 
 </div>

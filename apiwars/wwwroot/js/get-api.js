@@ -15,6 +15,25 @@ export function loadSwApi(planetPage = "https://swapi.dev/api/planets") {
     getSwApi(planetPage);
 }
 
+
+let x = async function () {
+    let x = 0;
+    parseInt(await fetch("/Home/IsUserLogged")
+        .then(value => {
+            x = value.status
+        })
+        .catch("User is not logged in"));
+
+    return await x;
+    // if (await x === 200) {
+    //     document.getElementById("test").innerHTML += `<button type="button" name="vote-button" class="votebutton btn btn-light btn-outline-secondary" 
+    //             data-planet-id="z" data-planet-name="x">Vote</button>`
+    // } else {
+    //     document.getElementById("test").innerHTML += `<button disabled type="button" name="vote-button" class="votebutton btn btn-dark btn-outline-dark" 
+    //             data-planet-id="z" data-planet-name="x">Log in to Vote!</button>`
+    // }
+}
+
 let addVoteEvent = function () {
     let voteButtons = getVoteButtons();
     for (let button of voteButtons) {
@@ -69,7 +88,8 @@ let downloadPlanetApiData = function (planetPage) {
         .catch(err => console.log(err));
 };
 
-let fetchPlanetData = function (planetPage, buttons) {
+let fetchPlanetData = async function (planetPage, buttons) {
+    let isLogged = await x();
     const proxyurl = "https://cors-anywhere.herokuapp.com/";
     fetch(proxyurl + planetPage)
         .then((response) => response.json())
@@ -80,14 +100,14 @@ let fetchPlanetData = function (planetPage, buttons) {
 
             data.results.forEach(function (output) {
                 let tableBody = getPlanetsTableBody();
-                tableBody.insertAdjacentHTML('beforeend', createPlanetsTable(output))
+                tableBody.insertAdjacentHTML('beforeend', createPlanetsTable(output, isLogged))
             });
             addEventListenersToResidentButton()
         })
         .then(() => enableNavigationButtons(buttons))
         .then(() => addVoteEvent())
         .then(() => downloadNeighboringPagesApi(buttons))
-        .catch(err => console.log(err));
+        .catch(err => console.log(err))
 };
 
 let downloadNeighboringPagesApi = function (buttons) {
