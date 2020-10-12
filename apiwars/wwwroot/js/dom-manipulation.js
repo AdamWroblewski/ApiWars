@@ -83,7 +83,7 @@ let getPlanetId = function (planetData) {
 let createVoteButton = function (output, isLogged) {
     let planetId = getPlanetId(output);
 
-    if (true) {
+    if (isLogged === 200) {
         return `<button type="button" name="vote-button" class="votebutton btn btn-light btn-outline-secondary" 
                 data-planet-id="${planetId}" data-planet-name="${output.name}">Vote</button>`
     } else {

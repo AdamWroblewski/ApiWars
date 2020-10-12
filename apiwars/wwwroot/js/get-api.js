@@ -78,7 +78,9 @@ let downloadPlanetApiData = function (planetPage) {
         .catch(err => console.log(err));
 };
 
-let fetchPlanetData = function (planetPage, buttons) {
+let fetchPlanetData = async function (planetPage, buttons) {
+    let isLogged = await isUserLogged();
+    console.log(isLogged)
     const proxyurl = "https://cors-anywhere.herokuapp.com/";
     fetch(proxyurl + planetPage)
         .then((response) => response.json())
@@ -89,7 +91,7 @@ let fetchPlanetData = function (planetPage, buttons) {
 
             data.results.forEach(function (output) {
                 let tableBody = getPlanetsTableBody();
-                tableBody.insertAdjacentHTML('beforeend', createPlanetsTable(output))
+                tableBody.insertAdjacentHTML('beforeend', createPlanetsTable(output, isLogged.status))
             });
             addEventListenersToResidentButton()
         })
@@ -119,8 +121,9 @@ let isUserLogged = async function () {
 }
 
 let getSwApi = async function (planetPage) {
-    let x = await isUserLogged();
-    console.log(x.status)
+    let isLogged = await isUserLogged();
+    console.log(isLogged)
+
     let buttons = getNavigationButtons();
     disableNavigationButtons(buttons);
 
@@ -131,7 +134,7 @@ let getSwApi = async function (planetPage) {
 
         data.results.forEach(function (output) {
             let tableBody = getPlanetsTableBody();
-            tableBody.insertAdjacentHTML('beforeend', createPlanetsTable(output))
+            tableBody.insertAdjacentHTML('beforeend', createPlanetsTable(output, isLogged.status))
         });
         addEventListenersToResidentButton();
         addVoteEvent();
