@@ -138,9 +138,9 @@ namespace apiwars.Controllers
         {
             if (await _userManager.GetUserAsync(User) != null)
             {
-                return Json(Ok());
+                return Ok();
             }
-            return Json(NotFound());
+            return NoContent();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -1,10 +1,19 @@
 import {
-    getModalDomElements, getNavigationButtons, getVoteButtons, getPlanetsTableBody,
-    getResidentStatisticsButton, getResidentTableHeaders, getResidentTableBody, getVoteStaticticsNavItem
+    getModalDomElements,
+    getNavigationButtons,
+    getPlanetsTableBody,
+    getResidentStatisticsButton,
+    getResidentTableBody,
+    getResidentTableHeaders,
+    getVoteButtons,
+    getVoteStaticticsNavItem
 } from "./get-dom-elements.js";
 import {
-    insertRowData, createPlanetsTable, createVotingStatisticsTable, changeButtonAfterSuccessfulVote,
-    changeButtonAfterFailedVote
+    changeButtonAfterFailedVote,
+    changeButtonAfterSuccessfulVote,
+    createPlanetsTable,
+    createVotingStatisticsTable,
+    insertRowData
 } from "./dom-manipulation.js";
 import {setButtonUrl} from "./change-pages.js";
 
@@ -99,7 +108,19 @@ let downloadNeighboringPagesApi = function (buttons) {
     }
 };
 
-let getSwApi = function (planetPage) {
+let isUserLogged = async function () {
+    return await fetch('/Home/IsUserLogged', {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        method: 'GET',
+    });
+}
+
+let getSwApi = async function (planetPage) {
+    let x = await isUserLogged();
+    console.log(x.status)
     let buttons = getNavigationButtons();
     disableNavigationButtons(buttons);
 
