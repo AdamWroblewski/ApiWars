@@ -49,8 +49,6 @@ let ajaxVote = function (button) {
         planetName: button.dataset.planetName,
         planetNameList: JSON.stringify(planetNamesArray,)
     };
-    console.log(voteUrlParams.planetId);
-    console.log(voteUrlParams.planetName);
 
     let url = '/Home/VoteToPlanet?' + 'planetId=' + voteUrlParams.planetId + '&planetName=' + voteUrlParams.planetName;
 
@@ -181,7 +179,6 @@ let loadResidentTableHeaders = function (modalForm) {
 
 let loadResidentApi = function (button) {
     let modalForm = getModalDomElements();
-    console.log(modalForm)
     loadResidentTableHeaders(modalForm);
 
     let planetName = button.dataset.residents;
