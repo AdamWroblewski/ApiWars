@@ -50,7 +50,7 @@
         @if (SignInManager.IsSignedIn(User))
         {
             <span>Hello, <strong>@SignInManager.UserManager.GetUserName(User)</strong></span>
-            <form class="form-inline my-2 my-lg-0" id="modal-form"
+            <form class="form-inline my-2 my-lg-0"
                   asp-controller="Home" asp-action="Logout" method="post">
                 <button type="submit" class="btn btn-primary m-1" id="login-button" data-toggle="modal">
                     Logout
@@ -59,7 +59,7 @@
         }
         else
         {
-            <form class="form-inline my-2 my-lg-0" id="modal-form"
+            <form class="form-inline my-2 my-lg-0" 
                   asp-controller="Home" asp-action="RegisterUser" method="post">
                 <button type="button" class="btn btn-primary m-1" id="register-button" data-toggle="modal"
                         data-target="#register-modal">
