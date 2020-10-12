@@ -1,6 +1,9 @@
 export let getModalDomElements = function(){
     return {
-        modalText : document.querySelector(".modal-body"),
+        residentModalText : document.querySelector(".resident-modal-body"),
+        planetModalText : document.querySelector(".planet-modal-body"),
+        modalLabel : document.querySelector("#modal-label"),
+        modalConfirm : document.querySelector("#modal-confirm"),
         modalTitle : document.querySelector(".modal-title"),
     };
 };
