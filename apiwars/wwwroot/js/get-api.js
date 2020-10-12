@@ -34,10 +34,7 @@ let addVoteEvent = function () {
 let ajaxDisplayVote = function () {
     fetch('/Home/GetPlanetVotes')
         .then(data => data.json())
-        .then(response => {
-            console.log(response)
-            createVotingStatisticsTable(response)
-        })
+        .then(response => createVotingStatisticsTable(response))
         .catch(err => console.log(err))
 };
 

@@ -30,13 +30,10 @@ export let createVotingStatisticsTable = function (voteStatictics) {
         </table>
     `;
     modal.modalTitle.innerHTML = 'Voting statistics';
-    modal.modalConfirm.style.visibility = 'hidden';
 };
 
 let insertVotingStatictisToTable = function (voteStatictics) {
     let tableRow = '';
-    console.log(typeof voteStatictics)
-    // voteStatictics.forEach(function (row) {
     for (let [key, value] of Object.entries(voteStatictics)) {
         tableRow += `<tr>
                       <td>${key}</td>
