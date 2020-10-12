@@ -41,9 +41,10 @@
             </li>
             <li class="nav-item">
                 <span class="nav-link voting-statistics-navitem"
-                      data-toggle="modal" data-target="#apiwars-modal">
+                      data-toggle="modal" data-target="#planet-votes-modal">
                     Voting statistics
                 </span>
+                @await Html.PartialAsync("PlanetVotesModal")
             </li>
         </ul>
 
@@ -59,7 +60,7 @@
         }
         else
         {
-            <form class="form-inline my-2 my-lg-0" 
+            <form class="form-inline my-2 my-lg-0"
                   asp-controller="Home" asp-action="RegisterUser" method="post">
                 <button type="button" class="btn btn-primary m-1" id="register-button" data-toggle="modal"
                         data-target="#register-modal">

@@ -21,9 +21,23 @@ namespace apiwars.Repository
             return model;
         }
 
-        public async Task<IEnumerable<PlanetVotesModel>> GetAllAsync()
+        public async Task<Dictionary<string, int>> GetAllAsync()
         {
-            return await _context.PlanetVotes.ToListAsync();
+            var result = await _context.PlanetVotes.ToListAsync();
+            Dictionary<string, int> planetVotes = new Dictionary<string, int>();
+            foreach (var planetVote in result)
+            {
+                if (!planetVotes.ContainsKey(planetVote.PlanetName.ToString()))
+                {
+                    planetVotes.Add(planetVote.PlanetName, 1);
+                }
+                else
+                {
+                    planetVotes[planetVote.PlanetName] = planetVotes[planetVote.PlanetName] + 1;
+                }
+            }
+
+            return planetVotes;
         }
 
         public async Task<int> SaveChangesAsync()

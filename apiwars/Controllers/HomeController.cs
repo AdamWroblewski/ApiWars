@@ -67,6 +67,11 @@ namespace apiwars.Controllers
             return NotFound();
         }
 
+        public async Task<IActionResult> GetPlanetVotes()
+        {
+            var planetVotes = await _planetVoteRepository.GetAllAsync();
+            return Json(planetVotes);
+        }
         [HttpPost]
         public async Task<IActionResult> RegisterUser(RegisterViewModel viewModel)
         {

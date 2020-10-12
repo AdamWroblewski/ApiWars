@@ -35,12 +35,14 @@ export let createVotingStatisticsTable = function (voteStatictics) {
 
 let insertVotingStatictisToTable = function (voteStatictics) {
     let tableRow = '';
-    voteStatictics.forEach(function (row) {
+    console.log(typeof voteStatictics)
+    // voteStatictics.forEach(function (row) {
+    for (let [key, value] of Object.entries(voteStatictics)) {
         tableRow += `<tr>
-                      <td>${encodeURIComponent(row.planet_name)}</td>
-                      <td>${row.count}</td>
+                      <td>${key}</td>
+                      <td>${value}</td>
                     </tr>`
-    });
+    }
     return tableRow
 };
 
