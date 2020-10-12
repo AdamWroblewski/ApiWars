@@ -16,7 +16,7 @@ export let insertRowData = function (data) {
 
 export let createVotingStatisticsTable = function (voteStatictics) {
     let modal = getModalDomElements();
-    modal.modalText.innerHTML = `
+    modal.planetModalText.innerHTML = `
         <table class="table table-bordered table-responsive planets-voting-table">
           <thead>
             <tr>

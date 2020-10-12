@@ -82,10 +82,12 @@ let fetchPlanetData = async function (planetPage, buttons) {
     let isLogged = await isUserLogged();
 
     const proxyurl = "https://cors-anywhere.herokuapp.com/";
-    fetch(proxyurl + planetPage, {mode: "cors", headers: {
+    fetch(proxyurl + planetPage, {
+        mode: "cors", headers: {
             'Content-Type': 'application/json',
             'API-Key': 'secret'
-        }})
+        }
+    })
         .then((response) => response.json())
         .then(data => {
             sessionStorage.setItem(planetPage, JSON.stringify(data));
@@ -169,7 +171,7 @@ let addEventListenersToResidentButton = function () {
 };
 
 let loadResidentTableHeaders = function (modalForm) {
-    modalForm.modalText.innerHTML = `<table class="table table-bordered resident-data"><tr class="resident-headers"></tr></table>`;
+    modalForm.residentModalText.innerHTML = `<table class="table table-bordered resident-data"><tr class="resident-headers"></tr></table>`;
     const headers = ['Name', 'Height', 'Mass', 'Hair color', 'Skin color', 'Eye color', 'Birth year', 'Gender'];
     let tableHeader = getResidentTableHeaders();
     headers.forEach(function (header) {
@@ -179,14 +181,12 @@ let loadResidentTableHeaders = function (modalForm) {
 
 let loadResidentApi = function (button) {
     let modalForm = getModalDomElements();
+    console.log(modalForm)
     loadResidentTableHeaders(modalForm);
 
-
     let planetName = button.dataset.residents;
-    modalForm.modalConfirm.style.visibility = "hidden";
-    modalForm.modalTitle.innerHTML = 'Residents of ' + planetName;
-
-    fetch(`https://swapi.dev/api/planets/?search=${planetName}`, {mode: 'cors'})
+    const proxyurl = "https://cors-anywhere.herokuapp.com/";
+    fetch(proxyurl + `https://swapi.dev/api/planets/?search=${planetName}`, {mode: 'cors'})
         .then((response) => response.json())
         .then((data) => createResidentTable(data, planetName))
 };
