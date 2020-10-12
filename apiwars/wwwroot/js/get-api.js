@@ -80,7 +80,7 @@ let downloadPlanetApiData = function (planetPage) {
 
 let fetchPlanetData = async function (planetPage, buttons) {
     let isLogged = await isUserLogged();
-    console.log(isLogged)
+
     const proxyurl = "https://cors-anywhere.herokuapp.com/";
     fetch(proxyurl + planetPage)
         .then((response) => response.json())
@@ -122,7 +122,6 @@ let isUserLogged = async function () {
 
 let getSwApi = async function (planetPage) {
     let isLogged = await isUserLogged();
-    console.log(isLogged)
 
     let buttons = getNavigationButtons();
     disableNavigationButtons(buttons);
