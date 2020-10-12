@@ -72,13 +72,15 @@ namespace apiwars.Controllers
             var planetVotes = await _planetVoteRepository.GetAllAsync();
             return Json(planetVotes);
         }
+
         [HttpPost]
         public async Task<IActionResult> RegisterUser(RegisterViewModel viewModel)
         {
+            IdentityUser user = null;
             if (ModelState.IsValid)
             {
-                var user = new IdentityUser
-                    {UserName = viewModel.UserName, Email = viewModel.EmailAddress, EmailConfirmed = true};
+                user = new IdentityUser
+                    {UserName = viewModel.UserName, Email = $"{viewModel.UserName}@ab.cd", EmailConfirmed = true};
                 IdentityResult result = null;
 
                 try
@@ -94,6 +96,12 @@ namespace apiwars.Controllers
                 {
                     _logger.LogCritical(exception.Message);
                     ModelState.AddModelError("", "Record creation problem!");
+                }
+
+                if (result.Succeeded)
+                {
+                    await _signInManager.SignInAsync(user, isPersistent: false);
+                    return RedirectToAction("Index");
                 }
 
                 foreach (var error in result.Errors)
@@ -145,7 +153,20 @@ namespace apiwars.Controllers
             {
                 return Ok();
             }
+
             return NoContent();
+        }
+
+        [AcceptVerbs("Get", "Post")]
+        public async Task<IActionResult> IsUserNameUnique(string userName)
+        {
+            var user = await _userManager.FindByNameAsync(userName);
+            if (user != null)
+            {
+                return Json($"Użytkownik o nazwe {user} już istnieje");
+            }
+
+            return Json(true);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

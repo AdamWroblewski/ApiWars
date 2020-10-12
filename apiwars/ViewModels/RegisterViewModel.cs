@@ -10,12 +10,8 @@ namespace apiwars.ViewModels
         [RegularExpression("^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]*$",
             ErrorMessage = "{0} can contain only letters and numbers")]
         [DisplayName("User name")]
+        [Remote("IsUserNameUnique", "Home")]
         public string UserName { get; set; }
-
-        [Required]
-        [EmailAddress]
-        [DisplayName("Email address")]
-        public string EmailAddress { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
