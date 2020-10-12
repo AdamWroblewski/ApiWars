@@ -82,7 +82,10 @@ let fetchPlanetData = async function (planetPage, buttons) {
     let isLogged = await isUserLogged();
 
     const proxyurl = "https://cors-anywhere.herokuapp.com/";
-    fetch(proxyurl + planetPage)
+    fetch(proxyurl + planetPage, {mode: "cors", headers: {
+            'Content-Type': 'application/json',
+            'API-Key': 'secret'
+        }})
         .then((response) => response.json())
         .then(data => {
             sessionStorage.setItem(planetPage, JSON.stringify(data));
