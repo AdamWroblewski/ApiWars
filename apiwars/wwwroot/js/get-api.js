@@ -1,10 +1,19 @@
 import {
-    getModalDomElements, getNavigationButtons, getVoteButtons, getPlanetsTableBody,
-    getResidentStatisticsButton, getResidentTableHeaders, getResidentTableBody, getVoteStaticticsNavItem
+    getModalDomElements,
+    getNavigationButtons,
+    getPlanetsTableBody,
+    getResidentStatisticsButton,
+    getResidentTableBody,
+    getResidentTableHeaders,
+    getVoteButtons,
+    getVoteStaticticsNavItem
 } from "./get-dom-elements.js";
 import {
-    insertRowData, createPlanetsTable, createVotingStatisticsTable, changeButtonAfterSuccessfulVote,
-    changeButtonAfterFailedVote
+    changeButtonAfterFailedVote,
+    changeButtonAfterSuccessfulVote,
+    createPlanetsTable,
+    createVotingStatisticsTable,
+    insertRowData
 } from "./dom-manipulation.js";
 import {setButtonUrl} from "./change-pages.js";
 
@@ -15,25 +24,6 @@ export function loadSwApi(planetPage = "https://swapi.dev/api/planets") {
     getSwApi(planetPage);
 }
 
-
-let x = async function () {
-    let x = 0;
-    parseInt(await fetch("/Home/IsUserLogged")
-        .then(value => {
-            x = value.status
-        })
-        .catch("User is not logged in"));
-
-    return await x;
-    // if (await x === 200) {
-    //     document.getElementById("test").innerHTML += `<button type="button" name="vote-button" class="votebutton btn btn-light btn-outline-secondary" 
-    //             data-planet-id="z" data-planet-name="x">Vote</button>`
-    // } else {
-    //     document.getElementById("test").innerHTML += `<button disabled type="button" name="vote-button" class="votebutton btn btn-dark btn-outline-dark" 
-    //             data-planet-id="z" data-planet-name="x">Log in to Vote!</button>`
-    // }
-}
-
 let addVoteEvent = function () {
     let voteButtons = getVoteButtons();
     for (let button of voteButtons) {
@@ -42,9 +32,9 @@ let addVoteEvent = function () {
 };
 
 let ajaxDisplayVote = function () {
-    fetch("/Home/GetPlanetStatisticVotes")
-        .then(response => response.json())
-        .then(data => createVotingStatisticsTable(data))
+    fetch('/Home/GetPlanetVotes')
+        .then(data => data.json())
+        .then(response => createVotingStatisticsTable(response))
         .catch(err => console.log(err))
 };
 
@@ -59,8 +49,6 @@ let ajaxVote = function (button) {
         planetName: button.dataset.planetName,
         planetNameList: JSON.stringify(planetNamesArray,)
     };
-    console.log(voteUrlParams.planetId);
-    console.log(voteUrlParams.planetName);
 
     let url = '/Home/VoteToPlanet?' + 'planetId=' + voteUrlParams.planetId + '&planetName=' + voteUrlParams.planetName;
 
@@ -89,9 +77,15 @@ let downloadPlanetApiData = function (planetPage) {
 };
 
 let fetchPlanetData = async function (planetPage, buttons) {
-    let isLogged = await x();
+    let isLogged = await isUserLogged();
+
     const proxyurl = "https://cors-anywhere.herokuapp.com/";
-    fetch(proxyurl + planetPage)
+    fetch(proxyurl + planetPage, {
+        mode: "cors", headers: {
+            'Content-Type': 'application/json',
+            'API-Key': 'secret'
+        }
+    })
         .then((response) => response.json())
         .then(data => {
             sessionStorage.setItem(planetPage, JSON.stringify(data));
@@ -100,14 +94,14 @@ let fetchPlanetData = async function (planetPage, buttons) {
 
             data.results.forEach(function (output) {
                 let tableBody = getPlanetsTableBody();
-                tableBody.insertAdjacentHTML('beforeend', createPlanetsTable(output, isLogged))
+                tableBody.insertAdjacentHTML('beforeend', createPlanetsTable(output, isLogged.status))
             });
             addEventListenersToResidentButton()
         })
         .then(() => enableNavigationButtons(buttons))
         .then(() => addVoteEvent())
         .then(() => downloadNeighboringPagesApi(buttons))
-        .catch(err => console.log(err))
+        .catch(err => console.log(err));
 };
 
 let downloadNeighboringPagesApi = function (buttons) {
@@ -119,7 +113,19 @@ let downloadNeighboringPagesApi = function (buttons) {
     }
 };
 
-let getSwApi = function (planetPage) {
+let isUserLogged = async function () {
+    return await fetch('/Home/IsUserLogged', {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        method: 'GET',
+    });
+}
+
+let getSwApi = async function (planetPage) {
+    let isLogged = await isUserLogged();
+
     let buttons = getNavigationButtons();
     disableNavigationButtons(buttons);
 
@@ -130,7 +136,7 @@ let getSwApi = function (planetPage) {
 
         data.results.forEach(function (output) {
             let tableBody = getPlanetsTableBody();
-            tableBody.insertAdjacentHTML('beforeend', createPlanetsTable(output))
+            tableBody.insertAdjacentHTML('beforeend', createPlanetsTable(output, isLogged.status))
         });
         addEventListenersToResidentButton();
         addVoteEvent();
@@ -163,7 +169,7 @@ let addEventListenersToResidentButton = function () {
 };
 
 let loadResidentTableHeaders = function (modalForm) {
-    modalForm.modalText.innerHTML = `<table class="table table-bordered resident-data"><tr class="resident-headers"></tr></table>`;
+    modalForm.residentModalText.innerHTML = `<table class="table table-bordered resident-data"><tr class="resident-headers"></tr></table>`;
     const headers = ['Name', 'Height', 'Mass', 'Hair color', 'Skin color', 'Eye color', 'Birth year', 'Gender'];
     let tableHeader = getResidentTableHeaders();
     headers.forEach(function (header) {
@@ -175,12 +181,9 @@ let loadResidentApi = function (button) {
     let modalForm = getModalDomElements();
     loadResidentTableHeaders(modalForm);
 
-
     let planetName = button.dataset.residents;
-    modalForm.modalConfirm.style.visibility = "hidden";
-    modalForm.modalTitle.innerHTML = 'Residents of ' + planetName;
-
-    fetch(`https://swapi.dev/api/planets/?search=${planetName}`, {mode: 'cors'})
+    const proxyurl = "https://cors-anywhere.herokuapp.com/";
+    fetch(proxyurl + `https://swapi.dev/api/planets/?search=${planetName}`, {mode: 'cors'})
         .then((response) => response.json())
         .then((data) => createResidentTable(data, planetName))
 };

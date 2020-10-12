@@ -67,6 +67,11 @@ namespace apiwars.Controllers
             return NotFound();
         }
 
+        public async Task<IActionResult> GetPlanetVotes()
+        {
+            var planetVotes = await _planetVoteRepository.GetAllAsync();
+            return Json(planetVotes);
+        }
         [HttpPost]
         public async Task<IActionResult> RegisterUser(RegisterViewModel viewModel)
         {
@@ -140,24 +145,7 @@ namespace apiwars.Controllers
             {
                 return Ok();
             }
-
             return NoContent();
-        }
-
-        public async Task<IActionResult> GetPlanetStatisticVotes()
-        {
-            PlanetVotesViewModel viewModel = new PlanetVotesViewModel();
-            try
-            {
-                viewModel.PlanetVotes = await _planetVoteRepository.GetAllAsync();
-            }
-            catch (SqlException exception)
-            {
-                _logger.LogCritical(exception.Message);
-                ModelState.AddModelError("", "Db connection problem!");
-            }
-
-            return Json(viewModel);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

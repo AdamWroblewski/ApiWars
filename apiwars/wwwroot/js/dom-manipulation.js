@@ -16,7 +16,7 @@ export let insertRowData = function (data) {
 
 export let createVotingStatisticsTable = function (voteStatictics) {
     let modal = getModalDomElements();
-    modal.modalText.innerHTML = `
+    modal.planetModalText.innerHTML = `
         <table class="table table-bordered table-responsive planets-voting-table">
           <thead>
             <tr>
@@ -29,24 +29,15 @@ export let createVotingStatisticsTable = function (voteStatictics) {
           </tbody>
         </table>
     `;
+    modal.modalTitle.innerHTML = 'Voting statistics';
 };
 
 let insertVotingStatictisToTable = function (voteStatictics) {
     let tableRow = '';
-    let votes = Object.entries(voteStatictics)[0][1];
-    let votesCount = Object.create({});
-    votes.forEach(vote => {
-        if (!(vote.planetName in votesCount)){
-            votesCount[vote.planetName+""] = 1;
-        }
-        else {
-            votesCount[vote.planetName] = parseInt(votesCount[vote.planetName] + 1);
-        }
-    })
-    for (let vote in votesCount){
+    for (let [key, value] of Object.entries(voteStatictics)) {
         tableRow += `<tr>
-                      <td>${vote}</td>
-                      <td>${votesCount[vote]}</td>
+                      <td>${key}</td>
+                      <td>${value}</td>
                     </tr>`
     }
     return tableRow
