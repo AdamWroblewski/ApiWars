@@ -1,10 +1,19 @@
 import {
-    getModalDomElements, getNavigationButtons, getVoteButtons, getPlanetsTableBody,
-    getResidentStatisticsButton, getResidentTableHeaders, getResidentTableBody, getVoteStaticticsNavItem
+    getModalDomElements,
+    getNavigationButtons,
+    getPlanetsTableBody,
+    getResidentStatisticsButton,
+    getResidentTableBody,
+    getResidentTableHeaders,
+    getVoteButtons,
+    getVoteStaticticsNavItem
 } from "./get-dom-elements.js";
 import {
-    insertRowData, createPlanetsTable, createVotingStatisticsTable, changeButtonAfterSuccessfulVote,
-    changeButtonAfterFailedVote
+    changeButtonAfterFailedVote,
+    changeButtonAfterSuccessfulVote,
+    createPlanetsTable,
+    createVotingStatisticsTable,
+    insertRowData
 } from "./dom-manipulation.js";
 import {setButtonUrl} from "./change-pages.js";
 
@@ -23,9 +32,9 @@ let addVoteEvent = function () {
 };
 
 let ajaxDisplayVote = function () {
-    fetch("/Home/GetPlanetStatisticVotes")
-        .then(response => response.json())
-        .then(data => createVotingStatisticsTable(data))
+    fetch('/Home/GetPlanetVotes')
+        .then(data => data.json())
+        .then(response => createVotingStatisticsTable(response))
         .catch(err => console.log(err))
 };
 
@@ -69,9 +78,14 @@ let downloadPlanetApiData = function (planetPage) {
         .catch(err => console.log(err));
 };
 
-let fetchPlanetData = function (planetPage, buttons) {
+let fetchPlanetData = async function (planetPage, buttons) {
+    let isLogged = await isUserLogged();
+
     const proxyurl = "https://cors-anywhere.herokuapp.com/";
-    fetch(proxyurl + planetPage)
+    fetch(proxyurl + planetPage, {mode: "cors", headers: {
+            'Content-Type': 'application/json',
+            'API-Key': 'secret'
+        }})
         .then((response) => response.json())
         .then(data => {
             sessionStorage.setItem(planetPage, JSON.stringify(data));
@@ -80,7 +94,7 @@ let fetchPlanetData = function (planetPage, buttons) {
 
             data.results.forEach(function (output) {
                 let tableBody = getPlanetsTableBody();
-                tableBody.insertAdjacentHTML('beforeend', createPlanetsTable(output))
+                tableBody.insertAdjacentHTML('beforeend', createPlanetsTable(output, isLogged.status))
             });
             addEventListenersToResidentButton()
         })
@@ -99,7 +113,19 @@ let downloadNeighboringPagesApi = function (buttons) {
     }
 };
 
-let getSwApi = function (planetPage) {
+let isUserLogged = async function () {
+    return await fetch('/Home/IsUserLogged', {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        method: 'GET',
+    });
+}
+
+let getSwApi = async function (planetPage) {
+    let isLogged = await isUserLogged();
+
     let buttons = getNavigationButtons();
     disableNavigationButtons(buttons);
 
@@ -110,7 +136,7 @@ let getSwApi = function (planetPage) {
 
         data.results.forEach(function (output) {
             let tableBody = getPlanetsTableBody();
-            tableBody.insertAdjacentHTML('beforeend', createPlanetsTable(output))
+            tableBody.insertAdjacentHTML('beforeend', createPlanetsTable(output, isLogged.status))
         });
         addEventListenersToResidentButton();
         addVoteEvent();

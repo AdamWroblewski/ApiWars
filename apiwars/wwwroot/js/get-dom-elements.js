@@ -1,9 +1,6 @@
 export let getModalDomElements = function(){
     return {
-        modalBody : document.querySelector("#modal-form"),
-        // modalHidden : document.querySelector("#login-or-register"),
         modalText : document.querySelector(".modal-body"),
-        modalConfirm : document.querySelector("#modal-confirm"),
         modalTitle : document.querySelector(".modal-title"),
     };
 };

@@ -29,24 +29,15 @@ export let createVotingStatisticsTable = function (voteStatictics) {
           </tbody>
         </table>
     `;
+    modal.modalTitle.innerHTML = 'Voting statistics';
 };
 
 let insertVotingStatictisToTable = function (voteStatictics) {
     let tableRow = '';
-    let votes = Object.entries(voteStatictics)[0][1];
-    let votesCount = Object.create({});
-    votes.forEach(vote => {
-        if (!(vote.planetName in votesCount)){
-            votesCount[vote.planetName+""] = 1;
-        }
-        else {
-            votesCount[vote.planetName] = parseInt(votesCount[vote.planetName] + 1);
-        }
-    })
-    for (let vote in votesCount){
+    for (let [key, value] of Object.entries(voteStatictics)) {
         tableRow += `<tr>
-                      <td>${vote}</td>
-                      <td>${votesCount[vote]}</td>
+                      <td>${key}</td>
+                      <td>${value}</td>
                     </tr>`
     }
     return tableRow
@@ -91,7 +82,7 @@ let getPlanetId = function (planetData) {
 let createVoteButton = function (output, isLogged) {
     let planetId = getPlanetId(output);
 
-    if (true) {
+    if (isLogged === 200) {
         return `<button type="button" name="vote-button" class="votebutton btn btn-light btn-outline-secondary" 
                 data-planet-id="${planetId}" data-planet-name="${output.name}">Vote</button>`
     } else {

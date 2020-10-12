@@ -67,6 +67,11 @@ namespace apiwars.Controllers
             return NotFound();
         }
 
+        public async Task<IActionResult> GetPlanetVotes()
+        {
+            var planetVotes = await _planetVoteRepository.GetAllAsync();
+            return Json(planetVotes);
+        }
         [HttpPost]
         public async Task<IActionResult> RegisterUser(RegisterViewModel viewModel)
         {
@@ -138,10 +143,9 @@ namespace apiwars.Controllers
         {
             if (await _userManager.GetUserAsync(User) != null)
             {
-                return Json(Ok());
+                return Ok();
             }
-
-            return Json(NotFound());
+            return NoContent();
         }
 
         public async Task<IActionResult> GetPlanetStatisticVotes()
