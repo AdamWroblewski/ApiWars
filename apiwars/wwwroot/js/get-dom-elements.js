@@ -33,6 +33,10 @@ export let getPlanetsTableBody = function () {
     return document.querySelector(".planet-table-body");
 };
 
+export let getPlanetsVotingTableBody = function () {
+    return document.querySelector(".planet-table-result");
+};
+
 export let getResidentStatisticsButton = function () {
     return document.querySelectorAll('.resident-button');
 };

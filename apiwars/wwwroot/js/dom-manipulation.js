@@ -24,7 +24,7 @@ export let createVotingStatisticsTable = function (voteStatictics) {
               <th scope="col">Vote count</th>
             </tr>
           </thead>
-          <tbody class="planet-table-body">
+          <tbody class="planet-table-result">
             ${insertVotingStatictisToTable(voteStatictics)}
           </tbody>
         </table>
