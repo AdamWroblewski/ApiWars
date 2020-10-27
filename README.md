@@ -8,4 +8,4 @@ Application server side is written in ASP.NET Core 3.1, I used MSSQL database an
 
 ## My application main view
 
-![alt text](https://www.photobox.co.uk/my/photo/full?photo_id=503325666025)
+![alt text](https://photos.google.com/search/_tra_/photo/AF1QipNTQahOeEkz6EvbJj4NXcXUq2EZ-riJ3I2LxBBj)
