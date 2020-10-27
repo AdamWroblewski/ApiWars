@@ -8,4 +8,4 @@ Application server side is written in ASP.NET Core 3.1, I used MSSQL database an
 
 ## My application main view
 
-![alt text](https://ibb.co/VxvRSPs)
+![alt text](https://i.ibb.co/tzbgsW9/Api-Wars-Layout.png)
