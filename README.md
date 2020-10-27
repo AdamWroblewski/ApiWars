@@ -6,3 +6,6 @@ Users can view data when they are not logged in, they can also register and log 
 All users can check the current voting statistics.
 Application server side is written in ASP.NET Core 3.1, I used MSSQL database and to consume and display api data I used JavaScript.
 
+## My application main view
+
+![alt text](https://ibb.co/VxvRSPs)
