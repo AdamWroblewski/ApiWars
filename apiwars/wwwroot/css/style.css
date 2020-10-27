@@ -1,4 +1,9 @@
-﻿﻿.swap-page {
+﻿body {
+    background-image: url('../shutterstock_295846730.jpg');
+    background-size: cover;
+}
+
+﻿.swap-page {
     margin: 10px 10px 10px 0;
 }
 
@@ -13,6 +18,23 @@
 tr td button{
     width: 90px;
     height: 50px;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+    opacity: 0.9;
+}
+tr:nth-child(odd) {
+    background-color: white;
+    opacity: 0.9;
+}
+
+th, tr {
+background-color: white;
+}
+
+table {
+    background-color: white ;
 }
 
 .modal-content {
