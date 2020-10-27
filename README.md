@@ -7,4 +7,5 @@ All users can check the current voting statistics.
 Application server side is written in ASP.NET Core 3.1, I used MSSQL database and to consume and display api data I used JavaScript.
 
 ## My application main view
-![image](https://photos.app.goo.gl/z6aPVKLp56k61bwt8)
+
+![image](images/shutterstock_295846730.jpg)
