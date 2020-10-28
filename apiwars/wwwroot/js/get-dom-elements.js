@@ -1,17 +1,17 @@
-export let getModalDomElements = function(){
+export let getModalDomElements = function () {
     return {
-        residentModalText : document.querySelector(".resident-modal-body"),
-        planetModalText : document.querySelector(".planet-modal-body"),
-        modalLabel : document.querySelector("#modal-label"),
-        modalConfirm : document.querySelector("#modal-confirm"),
-        modalTitle : document.querySelector(".modal-title"),
+        residentModalText: document.querySelector(".resident-modal-body"),
+        planetModalText: document.querySelector(".planet-modal-body"),
+        modalLabel: document.querySelector("#modal-label"),
+        modalConfirm: document.querySelector("#modal-confirm"),
+        modalTitle: document.querySelector(".modal-title"),
     };
 };
 
 export let getNavigationButtons = function () {
     return {
-        nextButton : document.querySelector('#next'),
-        previousButton : document.querySelector('#previous'),
+        nextButton: document.querySelector('#next'),
+        previousButton: document.querySelector('#previous'),
     };
 };
 
@@ -24,8 +24,9 @@ export let getVoteButtons = function () {
 };
 
 export let getUserSystemButtons = function () {
-    return {registerButton : document.querySelector('#register-button'),
-        loginButton : document.querySelector('#login-button')
+    return {
+        registerButton: document.querySelector('#register-button'),
+        loginButton: document.querySelector('#login-button')
     };
 };
 
@@ -52,3 +53,7 @@ export let getResidentTableBody = function () {
 export let getVoteStaticticsNavItem = function () {
     return document.querySelector('.voting-statistics-navitem');
 };
+
+export let getSpinnerTableRow = function () {
+    return document.querySelector('.planet-table-body');
+}

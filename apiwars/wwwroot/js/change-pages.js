@@ -1,5 +1,5 @@
 import {loadSwApi} from "./get-api.js";
-import {getNavigationButtons, getPlanetsTable} from "./get-dom-elements.js";
+import {getNavigationButtons} from "./get-dom-elements.js";
 import {resetPlanetsTable} from "./dom-manipulation.js";
 
 export function changePages() {
@@ -10,16 +10,16 @@ export function changePages() {
     });
 }
 
-export let setButtonUrl = function(buttons, data) {
+export let setButtonUrl = function (buttons, data) {
     buttons.nextButton.dataset.nextPage = data.next;
     buttons.previousButton.dataset.previousPage = data.previous;
 };
 
 let changePage = function (navigationButtons) {
     resetPlanetsTable();
-    if (event.target == navigationButtons.nextButton){
+    if (event.target == navigationButtons.nextButton) {
         loadSwApi(navigationButtons.nextButton.dataset.nextPage)
-    } else if (event.target == navigationButtons.previousButton){
+    } else if (event.target == navigationButtons.previousButton) {
         loadSwApi(navigationButtons.previousButton.dataset.previousPage)
     }
 };

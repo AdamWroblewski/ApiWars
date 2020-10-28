@@ -6,14 +6,15 @@ import {
     getResidentTableBody,
     getResidentTableHeaders,
     getVoteButtons,
-    getVoteStaticticsNavItem
+    getVoteStaticticsNavItem,
 } from "./get-dom-elements.js";
 import {
     changeButtonAfterFailedVote,
     changeButtonAfterSuccessfulVote,
     createPlanetsTable,
     createVotingStatisticsTable,
-    insertRowData
+    insertRowData,
+    insertSpinnerRow,
 } from "./dom-manipulation.js";
 import {setButtonUrl} from "./change-pages.js";
 
@@ -21,6 +22,9 @@ const proxyurl = "https://cors-anywhere.herokuapp.com/";
 
 export function loadSwApi(planetPage = "https://swapi.dev/api/planets") {
     let voteStaticticsButton = getVoteStaticticsNavItem();
+    if (sessionStorage.getItem(planetPage) === null) {
+        insertSpinnerRow();
+    }
     voteStaticticsButton.addEventListener('click', () => ajaxDisplayVote());
 
     getSwApi(planetPage);
@@ -74,7 +78,7 @@ let ajaxVote = function (button) {
 
 let downloadPlanetApiData = function (planetPage) {
     sessionStorage.removeItem(planetPage);
-    fetch(proxyurl+planetPage, {
+    fetch(proxyurl + planetPage, {
         headers: {
             'Access-Control-Allow-Origin': '*'
         }
@@ -87,7 +91,8 @@ let downloadPlanetApiData = function (planetPage) {
 let fetchPlanetData = async function (planetPage, buttons) {
     let isLogged = await isUserLogged();
 
-    fetch(proxyurl + planetPage, {headers: {
+    fetch(proxyurl + planetPage, {
+        headers: {
             'Content-Type': 'application/json',
             'API-Key': 'secret',
             'Access-Control-Allow-Origin': '*'
@@ -99,6 +104,7 @@ let fetchPlanetData = async function (planetPage, buttons) {
 
             setButtonUrl(buttons, data);
 
+            document.getElementById("spinner").innerHTML = ``;
             data.results.forEach(function (output) {
                 let tableBody = getPlanetsTableBody();
                 tableBody.insertAdjacentHTML('beforeend', createPlanetsTable(output, isLogged.status))
@@ -121,7 +127,7 @@ let downloadNeighboringPagesApi = function (buttons) {
 };
 
 let isUserLogged = async function () {
-    return await fetch('/Home/IsUserLogged',{
+    return await fetch('/Home/IsUserLogged', {
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
@@ -191,10 +197,10 @@ let loadResidentApi = function (button) {
 
     let planetName = button.dataset.residents;
     fetch(proxyurl + `https://swapi.dev/api/planets/?search=${planetName}`, {
-            headers : {
-                'Access-Control-Allow-Origin': '*'
-            }
-        })
+        headers: {
+            'Access-Control-Allow-Origin': '*'
+        }
+    })
         .then((response) => response.json())
         .then((data) => createResidentTable(data, planetName))
 };
@@ -214,8 +220,8 @@ let fetchResidentsData = function (planetName, residentsUrl) {
         }
     } else {
         for (let resident of residentsUrl) {
-            fetch(proxyurl+resident, {
-                headers : {
+            fetch(proxyurl + resident, {
+                headers: {
                     'Access-Control-Allow-Origin': '*'
                 }
             })

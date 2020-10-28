@@ -1,4 +1,4 @@
-import {getPlanetsTable, getUserSystemButtons, getModalDomElements} from "./get-dom-elements.js";
+import {getModalDomElements, getPlanetsTable, getSpinnerTableRow} from "./get-dom-elements.js";
 
 export let insertRowData = function (data) {
     let {name, height, mass, hair_color, skin_color, eye_color, birth_year, gender} = data;
@@ -115,7 +115,11 @@ export let resetPlanetsTable = function () {
               <th scope="col" style="width: 100px;"></th>
             </tr>
           </thead>
-          <tbody class="planet-table-body"></tbody>`
+          <tbody class="planet-table-body">
+          <tr id="spinner">
+            
+        </tr>
+</tbody>`
 };
 
 export let changeButtonAfterSuccessfulVote = function (data, button) {
@@ -133,3 +137,14 @@ export let changeButtonAfterFailedVote = function (data, button) {
     button.style.backgroundColor = '#db5621';
     button.disabled = true;
 };
+
+export let insertSpinnerRow = function () {
+    let spinnerRow = getSpinnerTableRow();
+    spinnerRow.innerHTML = `
+        <tr id="spinner">
+            <td colspan="8" align="center">
+                <div class="spinner-border"></div>
+            </td>
+        </tr>
+    `
+}
