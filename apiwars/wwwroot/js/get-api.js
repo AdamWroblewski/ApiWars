@@ -17,6 +17,8 @@ import {
 } from "./dom-manipulation.js";
 import {setButtonUrl} from "./change-pages.js";
 
+const proxyurl = "https://cors-anywhere.herokuapp.com/";
+
 export function loadSwApi(planetPage = "https://swapi.dev/api/planets") {
     let voteStaticticsButton = getVoteStaticticsNavItem();
     voteStaticticsButton.addEventListener('click', () => ajaxDisplayVote());
@@ -32,7 +34,11 @@ let addVoteEvent = function () {
 };
 
 let ajaxDisplayVote = function () {
-    fetch('/Home/GetPlanetVotes')
+    fetch('/Home/GetPlanetVotes', {
+        headers: {
+            'Access-Control-Allow-Origin': '*'
+        }
+    })
         .then(data => data.json())
         .then(response => createVotingStatisticsTable(response))
         .catch(err => console.log(err))
@@ -54,7 +60,6 @@ let ajaxVote = function (button) {
 
     fetch(url, {
         method: 'POST',
-        mode: 'cors',
         headers: {
             'Content-Type': 'application/json',
         }
@@ -69,8 +74,11 @@ let ajaxVote = function (button) {
 
 let downloadPlanetApiData = function (planetPage) {
     sessionStorage.removeItem(planetPage);
-
-    fetch(planetPage, {mode: 'cors'})
+    fetch(proxyurl+planetPage, {
+        headers: {
+            'Access-Control-Allow-Origin': '*'
+        }
+    })
         .then(response => response.json())
         .then(data => sessionStorage.setItem(planetPage, JSON.stringify(data)))
         .catch(err => console.log(err));
@@ -79,11 +87,10 @@ let downloadPlanetApiData = function (planetPage) {
 let fetchPlanetData = async function (planetPage, buttons) {
     let isLogged = await isUserLogged();
 
-    const proxyurl = "https://cors-anywhere.herokuapp.com/";
-    fetch(proxyurl + planetPage, {
-        mode: "cors", headers: {
+    fetch(proxyurl + planetPage, {headers: {
             'Content-Type': 'application/json',
-            'API-Key': 'secret'
+            'API-Key': 'secret',
+            'Access-Control-Allow-Origin': '*'
         }
     })
         .then((response) => response.json())
@@ -114,10 +121,11 @@ let downloadNeighboringPagesApi = function (buttons) {
 };
 
 let isUserLogged = async function () {
-    return await fetch('/Home/IsUserLogged', {
+    return await fetch('/Home/IsUserLogged',{
         headers: {
             'Accept': 'application/json',
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*'
         },
         method: 'GET',
     });
@@ -182,8 +190,11 @@ let loadResidentApi = function (button) {
     loadResidentTableHeaders(modalForm);
 
     let planetName = button.dataset.residents;
-    const proxyurl = "https://cors-anywhere.herokuapp.com/";
-    fetch(proxyurl + `https://swapi.dev/api/planets/?search=${planetName}`, {mode: 'cors'})
+    fetch(proxyurl + `https://swapi.dev/api/planets/?search=${planetName}`, {
+            headers : {
+                'Access-Control-Allow-Origin': '*'
+            }
+        })
         .then((response) => response.json())
         .then((data) => createResidentTable(data, planetName))
 };
@@ -203,7 +214,11 @@ let fetchResidentsData = function (planetName, residentsUrl) {
         }
     } else {
         for (let resident of residentsUrl) {
-            fetch(resident, {mode: 'cors'})
+            fetch(proxyurl+resident, {
+                headers : {
+                    'Access-Control-Allow-Origin': '*'
+                }
+            })
                 .then((response) => response.json())
                 .then(data => {
                     residentsArray.push(data);
