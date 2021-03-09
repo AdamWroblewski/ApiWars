@@ -74,7 +74,9 @@ let ajaxVote = function (button) {
 
 let downloadPlanetApiData = function (planetPage) {
     sessionStorage.removeItem(planetPage);
-    fetch(proxyurl + planetPage)
+    fetch(proxyurl + planetPage, {
+        mode: "cors"
+    })
         .then(response => response.json())
         .then(data => sessionStorage.setItem(planetPage, JSON.stringify(data)))
         .catch(err => console.log(err));
@@ -83,7 +85,9 @@ let downloadPlanetApiData = function (planetPage) {
 let fetchPlanetData = async function (planetPage, buttons) {
     let isLogged = await isUserLogged();
 
-    fetch(proxyurl + planetPage)
+    fetch(proxyurl + planetPage, {
+        mode: "cors"
+    })
         .then((response) => response.json())
         .then(data => {
             sessionStorage.setItem(planetPage, JSON.stringify(data));
@@ -177,7 +181,9 @@ let loadResidentApi = function (button) {
     loadResidentTableHeaders(modalForm);
 
     let planetName = button.dataset.residents;
-    fetch(proxyurl + `https://swapi.dev/api/planets/?search=${planetName}`)
+    fetch(proxyurl + `https://swapi.dev/api/planets/?search=${planetName}`, {
+        mode: "cors"
+    })
         .then((response) => response.json())
         .then((data) => createResidentTable(data, planetName))
 };
@@ -197,7 +203,9 @@ let fetchResidentsData = function (planetName, residentsUrl) {
         }
     } else {
         for (let resident of residentsUrl) {
-            fetch(proxyurl + resident)
+            fetch(proxyurl + resident, {
+                mode: "cors"
+            })
                 .then((response) => response.json())
                 .then(data => {
                     residentsArray.push(data);
