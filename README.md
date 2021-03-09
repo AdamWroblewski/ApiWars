@@ -1,5 +1,4 @@
 # ApiWars
-## [Link to application](https://api-wars.azurewebsites.net)
 
 ## About The Project
 
