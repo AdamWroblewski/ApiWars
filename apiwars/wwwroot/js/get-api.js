@@ -18,7 +18,7 @@ import {
 } from "./dom-manipulation.js";
 import {setButtonUrl} from "./change-pages.js";
 
-const proxyurl = "https://cors-anywhere.herokuapp.com/";
+const proxyurl = "https://thingproxy.freeboard.io/fetch/";
 
 export function loadSwApi(planetPage = "https://swapi.dev/api/planets") {
     let voteStaticticsButton = getVoteStaticticsNavItem();
